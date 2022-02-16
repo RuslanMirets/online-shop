@@ -1,3 +1,4 @@
+import { RolesModule } from './../roles/roles.module';
 import { JwtStrategy } from './jwt.strategy';
 import { LocalStrategy } from './local.strategy';
 import { Module } from '@nestjs/common';
@@ -11,6 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
   imports: [
     PassportModule,
     UsersModule,
+    RolesModule,
     JwtModule.register({
       secret: process.env.JWTKEY,
       signOptions: { expiresIn: process.env.TOKEN_EXPIRATION },
