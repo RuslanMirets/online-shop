@@ -30,10 +30,10 @@ const Header: React.FC = () => {
                 </>
               ) : (
                 <>
-                  <Link href="#">
+                  <Link href="/login">
                     <a className="nav-link">Войти</a>
                   </Link>
-                  <Link href="#">
+                  <Link href="/register">
                     <a className="nav-link">Зарегистрироваться</a>
                   </Link>
                 </>
