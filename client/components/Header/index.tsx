@@ -1,3 +1,4 @@
+import { AppBar, Container, Toolbar, Typography, Box } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
 
@@ -6,13 +7,19 @@ const Header: React.FC = () => {
 
   return (
     <header className="header mb-40">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-          <Link href="/">
-            <a className="navbar-brand">Online-Shop</a>
-          </Link>
-          <div className="collapse navbar-collapse d-flex justify-end" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
+      <AppBar position="static">
+        <Container maxWidth="xl">
+          <Toolbar className="d-flex justify-between">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
+              <Link href="/">
+                <a>LOGO</a>
+              </Link>
+            </Typography>
+            <Box className="d-flex" style={{ gap: '10px' }}>
               <Link href="/">
                 <a className="nav-link">Главная</a>
               </Link>
@@ -38,10 +45,10 @@ const Header: React.FC = () => {
                   </Link>
                 </>
               )}
-            </div>
-          </div>
-        </div>
-      </nav>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
     </header>
   );
 };

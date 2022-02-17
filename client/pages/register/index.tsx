@@ -1,73 +1,67 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Alert, Button } from '@mui/material';
 import { NextPage } from 'next';
-import React, { useState } from 'react';
+import { setCookie } from 'nookies';
+import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { FormField } from '../../components/FormField';
 import MainLayout from '../../layouts/MainLayout';
-import { FormSubmit, InputChange } from '../../redux/types/formType';
+import { UserApi } from '../../utils/api';
+import { UserDto } from '../../utils/api/types';
+import { RegisterFormSchema } from '../../utils/validations';
 
 const Register: NextPage = () => {
-  const initialState = { name: '', email: '', password: '' };
-  const [userData, setUserData] = useState(initialState);
-  const { name, email, password } = userData;
+  const [errorMessage, setErrorMessage] = React.useState('');
 
-  const handleChangeInput = (e: InputChange) => {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
-  };
+  const form = useForm({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    resolver: yupResolver(RegisterFormSchema),
+  });
 
-  const handleSubmit = (e: FormSubmit) => {
-    e.preventDefault();
-    console.log(userData);
+  const onSubmit = async (dto: UserDto) => {
+    try {
+      const data = await UserApi.register(dto);
+      console.log(data);
+      setCookie(null, 'shopToken', data.data.token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
+      setErrorMessage('');
+    } catch (error: any) {
+      console.warn('Ошибка при регистрации');
+      if (error.response) {
+        setErrorMessage(error.response.data.message);
+      }
+    }
   };
 
   return (
     <MainLayout>
-      <h2>Регистрация</h2>
-      <form
-        className="mx-auto my-4 d-flex flex-column"
-        style={{ maxWidth: '500px' }}
-        onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Имя
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            name="name"
-            value={name}
-            onChange={handleChangeInput}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            name="email"
-            value={email}
-            onChange={handleChangeInput}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Пароль
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            name="password"
-            value={password}
-            onChange={handleChangeInput}
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Зарегистрироваться
-        </button>
-      </form>
+      <FormProvider {...form}>
+        <h2 className="text-center mb-30">Регистрация</h2>
+        <form
+          style={{ maxWidth: '600px', margin: '0 auto' }}
+          onSubmit={form.handleSubmit(onSubmit)}>
+          <FormField type="text" name="name" label="Имя" />
+          <FormField type="email" name="email" label="Почта" />
+          <FormField type="password" name="password" label="Пароль" />
+          {errorMessage && (
+            <Alert className="mb-20" severity="error">
+              {errorMessage}
+            </Alert>
+          )}
+          <Button
+            className="mb-30"
+            type="submit"
+            color="primary"
+            variant="contained"
+            fullWidth
+            disabled={!form.formState.isValid || form.formState.isSubmitting}>
+            Регистрация
+          </Button>
+        </form>
+      </FormProvider>
     </MainLayout>
   );
 };

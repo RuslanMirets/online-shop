@@ -28,10 +28,12 @@ a {
   flex-grow: 1;
 }
 .footer {
-  height: 70px;
+  background-color: #1976d2;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #ffffff;
 }
 
 h2 {
