@@ -3,6 +3,7 @@ import React from 'react';
 import Header from '../components/Header';
 import 'macro-css';
 import Footer from '../components/Footer';
+import Alert from '../components/Alert/Alert';
 
 interface MainLayoutProps {
   title?: string;
@@ -33,6 +34,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, title, description, k
       </Head>
       <div className="wrapper container">
         <Header />
+        <Alert />
         <main className="main">{children}</main>
         <Footer />
       </div>
