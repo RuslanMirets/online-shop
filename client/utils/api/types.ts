@@ -8,3 +8,12 @@ export type UserDto = {
   email?: string;
   password?: string;
 };
+
+
+export type ResponseUser = {
+  id: number;
+  name: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+};

@@ -6,11 +6,14 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FormField } from '../../components/FormField';
 import MainLayout from '../../layouts/MainLayout';
+import { useAppDispatch } from '../../redux/hooks';
+import { setUserData } from '../../redux/slices/user';
 import { UserApi } from '../../utils/api';
 import { UserDto } from '../../utils/api/types';
 import { RegisterFormSchema } from '../../utils/validations';
 
 const Register: NextPage = () => {
+  const dispatch = useAppDispatch();
   const [errorMessage, setErrorMessage] = React.useState('');
 
   const form = useForm({
@@ -28,6 +31,7 @@ const Register: NextPage = () => {
         path: '/',
       });
       setErrorMessage('');
+      dispatch(setUserData(data.data));
     } catch (error: any) {
       console.warn('Ошибка при регистрации');
       if (error.response) {

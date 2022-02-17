@@ -9,8 +9,11 @@ import { UserApi } from '../../utils/api';
 import { LoginDto } from '../../utils/api/types';
 import { Alert, Button } from '@mui/material';
 import { FormField } from '../../components/FormField';
+import { useAppDispatch } from '../../redux/hooks';
+import { setUserData } from '../../redux/slices/user';
 
 const Login: NextPage = () => {
+  const dispatch = useAppDispatch();
   const [errorMessage, setErrorMessage] = React.useState('');
 
   const form = useForm({
@@ -28,6 +31,7 @@ const Login: NextPage = () => {
         path: '/',
       });
       setErrorMessage('');
+      dispatch(setUserData(data.data));
     } catch (error: any) {
       console.warn('Ошибка при авторизации');
       if (error.response) {
@@ -44,7 +48,7 @@ const Login: NextPage = () => {
           style={{ maxWidth: '600px', margin: '0 auto' }}
           onSubmit={form.handleSubmit(onSubmit)}>
           <FormField type="email" name="email" label="Почта" />
-          <FormField type="password" name="password" label="Почта" />
+          <FormField type="password" name="password" label="Пароль" />
           {errorMessage && (
             <Alert className="mb-20" severity="error">
               {errorMessage}

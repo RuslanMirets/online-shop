@@ -1,9 +1,11 @@
 import { AppBar, Container, Toolbar, Typography, Box } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
+import { useAppSelector } from '../../redux/hooks';
+import { selectUserData } from '../../redux/slices/user';
 
 const Header: React.FC = () => {
-  const isAuth = false;
+  const userData = useAppSelector(selectUserData);
 
   return (
     <header className="header mb-40">
@@ -26,7 +28,7 @@ const Header: React.FC = () => {
               <Link href="/about">
                 <a className="nav-link">О нас</a>
               </Link>
-              {isAuth ? (
+              {userData ? (
                 <>
                   <Link href="#">
                     <a className="nav-link">Профиль</a>
