@@ -1,14 +1,24 @@
 import '../styles/globals.scss';
 import type { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
-import { store } from '../redux/store';
+import { wrapper } from '../redux/store';
+import { parseCookies } from 'nookies';
+import { setUserData } from '../redux/slices/user';
+import { Api } from '../utils/api';
 
 function App({ Component, pageProps }: AppProps) {
-  return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
-  );
+  return <Component {...pageProps} />;
 }
 
-export default App;
+App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Component }) => {
+  try {
+    const userData = await Api(ctx).user.profile();
+    store.dispatch(setUserData(userData));
+  } catch (error) {
+    console.log(error);
+  }
+  return {
+    pageProps: Component.getInitialProps ? await Component.getInitialProps({ ...ctx, store }) : {},
+  };
+});
+
+export default wrapper.withRedux(App);

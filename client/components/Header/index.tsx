@@ -1,11 +1,19 @@
 import { AppBar, Container, Toolbar, Typography, Box } from '@mui/material';
 import Link from 'next/link';
+import { destroyCookie } from 'nookies';
 import React from 'react';
-import { useAppSelector } from '../../redux/hooks';
-import { selectUserData } from '../../redux/slices/user';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { selectUserData, setUserData } from '../../redux/slices/user';
 
 const Header: React.FC = () => {
   const userData = useAppSelector(selectUserData);
+  const dispatch = useAppDispatch();
+
+  const logout = (data: any) => {
+    destroyCookie(null, 'shopToken', null);
+    data = null;
+    dispatch(setUserData(data));
+  };
 
   return (
     <header className="header mb-40">
@@ -33,9 +41,7 @@ const Header: React.FC = () => {
                   <Link href="#">
                     <a className="nav-link">Профиль</a>
                   </Link>
-                  <Link href="#">
-                    <a className="nav-link">Выйти</a>
-                  </Link>
+                  <div className='cu-p' onClick={logout}>Выйти</div>
                 </>
               ) : (
                 <>

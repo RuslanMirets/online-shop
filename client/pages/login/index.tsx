@@ -1,18 +1,20 @@
 import { NextPage } from 'next';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import MainLayout from '../../layouts/MainLayout';
 import { LoginFormSchema } from '../../utils/validations';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { setCookie } from 'nookies';
-import { UserApi } from '../../utils/api';
+import { Api } from '../../utils/api';
 import { LoginDto } from '../../utils/api/types';
 import { Alert, Button } from '@mui/material';
 import { FormField } from '../../components/FormField';
-import { useAppDispatch } from '../../redux/hooks';
-import { setUserData } from '../../redux/slices/user';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { selectUserData, setUserData } from '../../redux/slices/user';
+import router from 'next/router';
 
 const Login: NextPage = () => {
+  const userData = useAppSelector(selectUserData);
   const dispatch = useAppDispatch();
   const [errorMessage, setErrorMessage] = React.useState('');
 
@@ -24,14 +26,14 @@ const Login: NextPage = () => {
 
   const onSubmit = async (dto: LoginDto) => {
     try {
-      const data = await UserApi.login(dto);
+      const data = await Api().user.login(dto);
       console.log(data);
-      setCookie(null, 'shopToken', data.data.token, {
+      setCookie(null, 'shopToken', data.token, {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',
       });
       setErrorMessage('');
-      dispatch(setUserData(data.data));
+      dispatch(setUserData(data));
     } catch (error: any) {
       console.warn('Ошибка при авторизации');
       if (error.response) {
@@ -39,6 +41,12 @@ const Login: NextPage = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (userData) {
+      router.push('/');
+    }
+  }, [userData]);
 
   return (
     <MainLayout>

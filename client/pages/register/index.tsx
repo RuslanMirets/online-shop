@@ -8,7 +8,7 @@ import { FormField } from '../../components/FormField';
 import MainLayout from '../../layouts/MainLayout';
 import { useAppDispatch } from '../../redux/hooks';
 import { setUserData } from '../../redux/slices/user';
-import { UserApi } from '../../utils/api';
+import { Api } from '../../utils/api';
 import { UserDto } from '../../utils/api/types';
 import { RegisterFormSchema } from '../../utils/validations';
 
@@ -24,14 +24,14 @@ const Register: NextPage = () => {
 
   const onSubmit = async (dto: UserDto) => {
     try {
-      const data = await UserApi.register(dto);
+      const data = await Api().user.register(dto);
       console.log(data);
-      setCookie(null, 'shopToken', data.data.token, {
+      setCookie(null, 'shopToken', data.token, {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',
       });
       setErrorMessage('');
-      dispatch(setUserData(data.data));
+      dispatch(setUserData(data));
     } catch (error: any) {
       console.warn('Ошибка при регистрации');
       if (error.response) {
