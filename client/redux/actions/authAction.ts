@@ -1,4 +1,4 @@
-import { setCookie } from 'nookies';
+import { destroyCookie, setCookie } from 'nookies';
 import { Dispatch } from 'react';
 import { postAPI } from '../../utils/FetchData';
 import { ALERT, IAlertType } from '../types/alertType';
@@ -26,3 +26,12 @@ export const login =
       dispatch({ type: ALERT, payload: { errors: 'Неверный логин или пароль' } });
     }
   };
+
+export const logout = async (dispatch: Dispatch<IAuthType | IAlertType>) => {
+  try {
+    destroyCookie(null, 'shopToken', null);
+    dispatch({ type: AUTH, payload: {} });
+  } catch (err: any) {
+    dispatch({ type: ALERT, payload: { errors: err.response.data.msg } });
+  }
+};
