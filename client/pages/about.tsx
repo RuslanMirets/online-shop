@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
 import { NextPage } from 'next';
 import React from 'react';
-import MainLayout from '../../layouts/MainLayout';
+import MainLayout from '../layouts/MainLayout';
 
 const About: NextPage = () => {
   return (
