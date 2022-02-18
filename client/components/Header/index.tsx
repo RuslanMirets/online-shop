@@ -1,9 +1,11 @@
 import { Box, AppBar, Toolbar, Typography, Container } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducers';
 
 const Header: React.FC = () => {
-  const isAuth = false;
+  const { auth } = useSelector((state: RootState) => state);
 
   return (
     <header className="header">
@@ -22,14 +24,14 @@ const Header: React.FC = () => {
                     <a>О нас</a>
                   </Link>
                 </li>
-                {isAuth ? (
+                {auth.user ? (
                   <>
                     <li>
                       <Link href="/profile">
                         <a>Профиль</a>
                       </Link>
                     </li>
-                    <li style={{cursor: 'pointer'}}>Выйти</li>
+                    <li style={{ cursor: 'pointer' }}>Выйти</li>
                   </>
                 ) : (
                   <>

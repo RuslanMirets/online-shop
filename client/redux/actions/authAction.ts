@@ -1,3 +1,4 @@
+import { setCookie } from 'nookies';
 import { Dispatch } from 'react';
 import { postAPI } from '../../utils/FetchData';
 import { ALERT, IAlertType } from '../types/alertType';
@@ -9,6 +10,10 @@ export const login =
     try {
       dispatch({ type: ALERT, payload: { loading: true } });
       const res = await postAPI('auth/login', userLogin);
+      setCookie(null, 'shopToken', res.data.token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
       dispatch({
         type: AUTH,
         payload: {
