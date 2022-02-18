@@ -44,3 +44,21 @@ a {
     gap: 15px;
   }
 }
+
+.loading {
+  position: fixed;
+  z-index: 9999;
+  bottom: 50px;
+  right: 70px;
+  background-color: #222222;
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+
+  .MuiCircularProgress-root {
+    width: 30px !important;
+    height: 30px !important;
+  }
+}
