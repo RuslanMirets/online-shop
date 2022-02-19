@@ -1,20 +1,24 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import userReducer from './reducers/UserSlice';
-import authReducer from './reducers/AuthSlice';
+import { reducer } from './reducers/index';
+import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 
-const rootReducer = combineReducers({
-  userReducer,
-  authReducer,
-});
+import { createWrapper } from 'next-redux-wrapper';
 
 export const makeStore = () => {
   return configureStore({
-    reducer: rootReducer,
+    reducer,
   });
 };
 
 export const store = makeStore();
 
-export type RootState = ReturnType<typeof rootReducer>;
 export type RootStore = ReturnType<typeof makeStore>;
-export type AppDispatch = RootStore['dispatch'];
+export type RootState = ReturnType<RootStore['getState']>;
+export type AppDispatch = typeof store.dispatch;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;
+
+export const wrapper = createWrapper<RootStore>(makeStore, { debug: true });

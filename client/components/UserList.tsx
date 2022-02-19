@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 
 const UserList = () => {
   const dispatch = useAppDispatch();
-  const { users, isLoading, error } = useAppSelector((state) => state.userReducer);
+  const { users, isLoading, error } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -14,7 +14,7 @@ const UserList = () => {
     <div>
       {isLoading && <h1>Идет загрузка...</h1>}
       {error && <h1>{error}</h1>}
-      {users.map((user) => (
+      {users.map((user: any) => (
         <div key={user.id}>
           {user.name} | {user.email} | {user.password} | {user.role[0].description}
         </div>

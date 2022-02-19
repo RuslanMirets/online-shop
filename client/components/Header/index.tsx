@@ -4,8 +4,7 @@ import React from 'react';
 import { useAppSelector } from '../../redux/hooks';
 
 const Header: React.FC = () => {
-  const isAuth = false;
-  const { user } = useAppSelector((state) => state.authReducer);
+  const { user } = useAppSelector((state) => state.auth);
 
   return (
     <header className="header">
@@ -28,7 +27,7 @@ const Header: React.FC = () => {
                   <>
                     <li>
                       <Link href="/profile">
-                        <a>Профиль</a>
+                        <a>Профиль | {user.name}</a>
                       </Link>
                     </li>
                     <li style={{ cursor: 'pointer' }}>Выйти</li>
