@@ -1,11 +1,17 @@
 import { Box, AppBar, Toolbar, Typography, Container } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
-import { useAppSelector } from '../../redux/hooks';
+import { logout } from '../../redux/actions/auth';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 const Header: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
+  const handleLogout = () => {
+    dispatch(logout);
+  };
+  
   return (
     <header className="header">
       <Container>
@@ -30,7 +36,7 @@ const Header: React.FC = () => {
                         <a>Профиль | {user.name}</a>
                       </Link>
                     </li>
-                    <li style={{ cursor: 'pointer' }}>Выйти</li>
+                    <li style={{ cursor: 'pointer' }} onClick={handleLogout}>Выйти</li>
                   </>
                 ) : (
                   <>

@@ -1,4 +1,4 @@
-import { setCookie } from 'nookies';
+import { destroyCookie, setCookie } from 'nookies';
 import { IUserLogin } from '../../models/IUser';
 import { postAPI } from '../../utils/FetchData';
 import { authSlice } from '../reducers/AuthSlice';
@@ -16,3 +16,21 @@ export const login = (userLogin: IUserLogin) => async (dispatch: AppDispatch) =>
     console.log(error.response.data.message);
   }
 };
+
+export const logout = async (dispatch: AppDispatch) => {
+  try {
+    destroyCookie(null, 'shopToken', null);
+    dispatch(authSlice.actions.logout());
+  } catch (error: any) {
+    console.log(error.response.data.message);
+  }
+};
+// export const logout = async (dispatch: Dispatch<IAuthType | IAlertType>) => {
+//   try {
+//     destroyCookie(null, 'shopToken', null);
+//     dispatch({ type: AUTH, payload: {} });
+//   } catch (err: any) {
+//     dispatch({ type: ALERT, payload: { errors: err.response.data.msg } });
+//   }
+// };
+
