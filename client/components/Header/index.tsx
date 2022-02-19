@@ -1,9 +1,11 @@
 import { Box, AppBar, Toolbar, Typography, Container } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
+import { useAppSelector } from '../../redux/hooks';
 
 const Header: React.FC = () => {
   const isAuth = false;
+  const { user } = useAppSelector((state) => state.authReducer);
 
   return (
     <header className="header">
@@ -22,7 +24,7 @@ const Header: React.FC = () => {
                     <a>О нас</a>
                   </Link>
                 </li>
-                {isAuth ? (
+                {user ? (
                   <>
                     <li>
                       <Link href="/profile">
