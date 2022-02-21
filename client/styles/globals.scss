@@ -62,3 +62,15 @@ a {
     height: 30px !important;
   }
 }
+
+.user-list {
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+}
