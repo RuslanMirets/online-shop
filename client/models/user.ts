@@ -9,3 +9,8 @@ export interface IUser {
   updatedAt: string;
   role: IRole[];
 }
+
+export interface IUserLogin {
+  email: string;
+  password: string;
+}

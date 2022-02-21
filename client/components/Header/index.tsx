@@ -1,9 +1,10 @@
 import { Box, AppBar, Toolbar, Typography, Container } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
+import { useAppSelector } from '../../redux/hooks';
 
 const Header: React.FC = () => {
-  const isAuth = false;
+  const isAuth = useAppSelector((state) => state.auth.data);
 
   return (
     <header className="header">
