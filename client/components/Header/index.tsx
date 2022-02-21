@@ -32,7 +32,7 @@ const Header: React.FC = () => {
                 {userData ? (
                   <>
                     <li>
-                      <Link href="/profile">
+                      <Link href={`/profile/${userData.id}`}>
                         <a>Профиль | {userData.name}</a>
                       </Link>
                     </li>
