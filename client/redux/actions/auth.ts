@@ -1,10 +1,10 @@
 import { authSlice } from './../slices/auth';
 import { postAPI } from './../../utils/FetchData';
 import { AppDispatch } from '../store';
-import { IUserLogin } from './../../models/user';
-import { setCookie } from 'nookies';
+import { IUser } from './../../models/user';
+import { destroyCookie, setCookie } from 'nookies';
 
-export const login = (data: IUserLogin) => async (dispatch: AppDispatch) => {
+export const login = (data: IUser) => async (dispatch: AppDispatch) => {
   try {
     const response = await postAPI('auth/login', data);
     setCookie(null, 'shopToken', response.data.token, {
@@ -12,6 +12,14 @@ export const login = (data: IUserLogin) => async (dispatch: AppDispatch) => {
       path: '/',
     });
     dispatch(authSlice.actions.login(response.data));
+  } catch (error: any) {
+    console.log(error.response.data.message);
+  }
+};
+export const logout = () => async (dispatch: AppDispatch) => {
+  try {
+    destroyCookie(null, 'shopToken', null);
+    dispatch(authSlice.actions.logout());
   } catch (error: any) {
     console.log(error.response.data.message);
   }

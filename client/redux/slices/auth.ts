@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
-import { IUserLogin } from '../../models/user';
+import { IUser } from '../../models/user';
 
 export interface AuthState {
-  data: IUserLogin | null;
+  data: IUser | null;
 }
 
 const initialState: AuthState = {
@@ -14,8 +14,11 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login(state, action: PayloadAction<IUserLogin>) {
+    login(state, action: PayloadAction<IUser>) {
       state.data = action.payload;
+    },
+    logout(state) {
+      state.data = null;
     },
   },
   extraReducers: {
@@ -24,7 +27,7 @@ export const authSlice = createSlice({
       //   ...state,
       //   ...action.payload.auth.data,
       // };
-      state.data = action.payload.auth.data
+      state.data = action.payload.auth.data;
     },
   },
 });

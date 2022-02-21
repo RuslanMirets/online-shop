@@ -1,11 +1,13 @@
 import { Button, Container, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import router from 'next/router';
+import React, { useEffect, useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import { login } from '../redux/actions/auth';
-import { useAppDispatch } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { FormSubmit, InputChange } from '../types/form';
 
 const Login = () => {
+  const user = useAppSelector((state) => state.auth.data);
   const dispatch = useAppDispatch();
 
   const initialState = { email: '', password: '' };
@@ -21,6 +23,12 @@ const Login = () => {
     e.preventDefault();
     dispatch(login(userData));
   };
+
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+    }
+  }, [user]);
 
   return (
     <MainLayout title="Авторизация">

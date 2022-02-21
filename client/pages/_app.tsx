@@ -13,9 +13,9 @@ App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ ctx, Compon
   try {
     const { shopToken } = parseCookies(ctx);
     const response = await getAPI('users/profile', shopToken);
-    store.dispatch(authSlice.actions.login(response.data));
+    store.dispatch(authSlice.actions.login(response.data))
   } catch (error: any) {
-    console.log(error);
+    console.log('Не авторизован');
   }
   return {
     pageProps: Component.getInitialProps ? await Component.getInitialProps({ ...ctx, store }) : {},
