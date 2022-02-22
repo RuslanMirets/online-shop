@@ -46,7 +46,7 @@ const Header = () => {
             ) : (
               <>
                 <li>
-                  <Link href="#">
+                  <Link href="/login">
                     <a>Войти</a>
                   </Link>
                 </li>

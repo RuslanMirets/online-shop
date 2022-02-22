@@ -50,3 +50,18 @@ ul {
     margin-right: auto;
   }
 }
+
+.auth-form {
+  max-width: 550px;
+  margin: 0 auto;
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
