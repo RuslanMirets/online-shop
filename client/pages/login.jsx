@@ -2,12 +2,16 @@ import { Button, Container, TextField } from '@mui/material';
 import React from 'react';
 import MainLayout from '../layouts/MainLayout';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { login } from '../store/actions/auth';
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (userData) => {
-    console.log(userData);
+    dispatch(login(userData));
   };
 
   return (

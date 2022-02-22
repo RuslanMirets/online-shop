@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../store/actions/user";
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsers } from '../store/actions/user';
 
 const UserList = () => {
   const dispatch = useDispatch();
@@ -14,8 +14,8 @@ const UserList = () => {
     <div className="user-list">
       <h1>Список пользователей</h1>
       <ul>
-        {users.map(user => (
-          <li>{user.name}</li>
+        {users.map((user) => (
+          <li key={user.id}>{user.name}</li>
         ))}
       </ul>
     </div>

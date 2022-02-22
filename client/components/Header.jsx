@@ -1,9 +1,10 @@
 import { Container } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
-  const userData = false;
+  const userData = useSelector(state => state.auth.authData)
 
   return (
     <header className="header">
