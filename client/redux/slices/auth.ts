@@ -3,11 +3,13 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { IUser } from '../../models/user';
 
 export interface AuthState {
-  data: IUser | null;
+  authData: IUser | null;
+  registerData: IUser | null;
 }
 
 const initialState: AuthState = {
-  data: null,
+  authData: null,
+  registerData: null,
 };
 
 export const authSlice = createSlice({
@@ -15,10 +17,13 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     login(state, action: PayloadAction<IUser>) {
-      state.data = action.payload;
+      state.authData = action.payload;
+    },
+    register(state, action: PayloadAction<IUser>) {
+      state.registerData = action.payload;
     },
     logout(state) {
-      state.data = null;
+      state.authData = null;
     },
   },
   extraReducers: {
@@ -27,7 +32,7 @@ export const authSlice = createSlice({
       //   ...state,
       //   ...action.payload.auth.data,
       // };
-      state.data = action.payload.auth.data;
+      state.authData = action.payload.auth.authData;
     },
   },
 });

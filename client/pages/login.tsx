@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { FormSubmit, InputChange } from '../types/form';
 
 const Login = () => {
-  const user = useAppSelector((state) => state.auth.data);
+  const user = useAppSelector((state) => state.auth.authData);
   const dispatch = useAppDispatch();
 
   const initialState = { email: '', password: '' };

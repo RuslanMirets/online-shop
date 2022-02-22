@@ -3,21 +3,25 @@ import { NextPage } from 'next';
 import router from 'next/router';
 import React, { useEffect } from 'react';
 import MainLayout from '../../layouts/MainLayout';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 const Profile: NextPage = () => {
-  const user = useAppSelector(state => state.auth.data)
+  const dispatch = useAppDispatch();
+  const authData = useAppSelector((state) => state.auth.authData);
+  const user = useAppSelector((state) => state.user.user);
 
   useEffect(() => {
-    if (user === null) {
-      router.push('/')
+    if (authData === null) {
+      router.push('/');
     }
-  }, [user])
+  }, [authData]);
 
   return (
     <MainLayout>
       <Container>
-        {user?.name}
+        <div>
+          {user?.name} | {user?.role[0].description}
+        </div>
       </Container>
     </MainLayout>
   );
